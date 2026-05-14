@@ -13,6 +13,16 @@ import { LandingPage } from './globals/LandingPage'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const requireEnv = (name: 'PAYLOAD_SECRET' | 'POSTGRES_URL'): string => {
+  const value = process.env[name]?.trim()
+
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`)
+  }
+
+  return value
+}
+
 const parseOrigins = (...values: Array<string | undefined>): string[] =>
   values
     .flatMap((value) => value?.split(',') ?? [])
@@ -40,6 +50,8 @@ const r2IsConfigured = Boolean(
     process.env.R2_SECRET_ACCESS_KEY &&
     r2PublicBaseUrl,
 )
+const payloadSecret = requireEnv('PAYLOAD_SECRET')
+const postgresUrl = requireEnv('POSTGRES_URL')
 
 export default buildConfig({
   admin: {
@@ -66,13 +78,13 @@ export default buildConfig({
       },
     ],
   },
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: payloadSecret,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: vercelPostgresAdapter({
     pool: {
-      connectionString: process.env.POSTGRES_URL || '',
+      connectionString: postgresUrl,
     },
   }),
   sharp,
