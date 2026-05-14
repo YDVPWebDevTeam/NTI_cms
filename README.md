@@ -4,7 +4,11 @@ This template comes configured with the bare minimum to get started on anything 
 
 ## Quick start
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+This app uses Payload CMS with:
+
+- Vercel Postgres for the database
+- optional Cloudflare R2 storage for media uploads
+- a localized `landing-page` global that can be seeded with starter content
 
 ## Quick Start - local setup
 
@@ -17,22 +21,28 @@ After you click the `Deploy` button above, you'll want to have standalone copy o
 ### Development
 
 1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
-
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+2. `cd my-project && cp .env.example .env` to copy the example environment variables.
+3. Set `POSTGRES_URL` in `.env`.
+4. Set `PAYLOAD_SECRET` in `.env`.
+5. Optional: configure `FRONTEND_URL` and `CORS_ORIGINS` for your frontend origins.
+6. Optional: configure the `R2_*` variables only if you want uploads stored in Cloudflare R2. R2 storage stays disabled until all required R2 variables, including `R2_PUBLIC_BASE_URL`, are set.
+7. `pnpm install && pnpm dev` to install dependencies and start the dev server.
+8. Open `http://localhost:3002` to access the admin.
+9. Run `pnpm seed` if you want starter content for the `landing-page` global.
 
 That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
 
 #### Docker (Optional)
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+If you prefer Docker for local development, the provided `docker-compose.yml` starts the app with Postgres.
 
 To do so, follow these steps:
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+- Set `POSTGRES_URL=postgresql://postgres:postgres@postgres:5432/payload`
+- Set `PAYLOAD_SECRET` in `.env`
+- Run `docker compose up` to start Postgres and the app
+- Open `http://localhost:3002`
+- Run `docker compose exec payload pnpm seed` if you want starter landing-page content
 
 ## How it works
 
@@ -56,9 +66,10 @@ See the [Collections](https://payloadcms.com/docs/configuration/collections) doc
 
 Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+1. Follow the environment setup above and make sure `POSTGRES_URL` points at the `postgres` service
+1. Next run `docker compose up`
+1. Open `http://localhost:3002`
+1. Run `docker compose exec payload pnpm seed` if you need starter landing-page content
 
 That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
 

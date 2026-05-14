@@ -1,5 +1,4 @@
 import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
 import { getPayload } from 'payload'
 import React from 'react'
 import { fileURLToPath } from 'url'
@@ -10,8 +9,15 @@ import './styles.css'
 export default async function HomePage() {
   const headers = await getHeaders()
   const payloadConfig = await config
-  const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
+  let user: null | { email?: null | string } = null
+
+  try {
+    const payload = await getPayload({ config: payloadConfig })
+    const authResult = await payload.auth({ headers })
+    user = authResult.user
+  } catch (error) {
+    console.error('Failed to load Payload auth state for homepage render', error)
+  }
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
@@ -20,7 +26,7 @@ export default async function HomePage() {
       <div className="content">
         <picture>
           <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/3.x/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
+          <img
             alt="Payload Logo"
             height={65}
             src="https://raw.githubusercontent.com/payloadcms/payload/3.x/packages/ui/src/assets/payload-favicon.svg"
