@@ -84,12 +84,16 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
-  fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
-  locale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'sk') | ('en' | 'sk')[];
+  globals: {
+    'landing-page': LandingPage;
+  };
+  globalsSelect: {
+    'landing-page': LandingPageSelect<false> | LandingPageSelect<true>;
+  };
+  locale: 'en' | 'sk';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -122,7 +126,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -147,8 +151,9 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt: string;
+  caption?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -160,13 +165,31 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: string;
+  id: number;
   key: string;
   data:
     | {
@@ -183,20 +206,20 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -206,10 +229,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -229,7 +252,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -263,6 +286,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  caption?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -274,6 +298,30 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -314,6 +362,245 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-page".
+ */
+export interface LandingPage {
+  id: number;
+  hero: {
+    eyebrow: string;
+    titlePrefix: string;
+    titleHighlight: string;
+    titleSuffix: string;
+    description: string;
+    primaryCTA: {
+      label: string;
+      href: string;
+    };
+    secondaryCTA: {
+      label: string;
+      href: string;
+    };
+    learnMoreCTA: {
+      label: string;
+      href: string;
+    };
+    /**
+     * Optional in CMS. The frontend will use its built-in fallback image until you upload one.
+     */
+    heroImage?: (number | null) | Media;
+  };
+  programs: {
+    heading: string;
+    items: {
+      title: string;
+      description: string;
+      icon: 'rocket' | 'building' | 'flask' | 'users' | 'mentor' | 'badge';
+      accent: 'primary' | 'tertiary';
+      bulletItems: {
+        label: string;
+        id?: string | null;
+      }[];
+      cta: {
+        label: string;
+        href: string;
+      };
+      id?: string | null;
+    }[];
+  };
+  infrastructure: {
+    eyebrow: string;
+    heading: string;
+    featuredCard: {
+      title: string;
+      description: string;
+      icon: 'rocket' | 'building' | 'flask' | 'users' | 'mentor' | 'badge';
+      /**
+       * Optional in CMS. The frontend will use its built-in fallback image until you upload one.
+       */
+      image?: (number | null) | Media;
+    };
+    cards: {
+      title: string;
+      description: string;
+      icon: 'rocket' | 'building' | 'flask' | 'users' | 'mentor' | 'badge';
+      tone: 'surface' | 'primary' | 'tertiary';
+      id?: string | null;
+    }[];
+  };
+  ecosystem: {
+    heading: string;
+    description: string;
+    partnerLogos: {
+      label: string;
+      id?: string | null;
+    }[];
+    mentors: {
+      name: string;
+      role: string;
+      bio: string;
+      /**
+       * Optional in CMS. The frontend will use its built-in fallback image until you upload one.
+       */
+      image?: (number | null) | Media;
+      id?: string | null;
+    }[];
+    successHighlight: {
+      eyebrow: string;
+      title: string;
+      metric: string;
+      subtext: string;
+    };
+  };
+  finalCTA: {
+    title: string;
+    description: string;
+    primaryCTA: {
+      label: string;
+      href: string;
+    };
+    secondaryCTA: {
+      label: string;
+      href: string;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-page_select".
+ */
+export interface LandingPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        titlePrefix?: T;
+        titleHighlight?: T;
+        titleSuffix?: T;
+        description?: T;
+        primaryCTA?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        secondaryCTA?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        learnMoreCTA?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        heroImage?: T;
+      };
+  programs?:
+    | T
+    | {
+        heading?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              icon?: T;
+              accent?: T;
+              bulletItems?:
+                | T
+                | {
+                    label?: T;
+                    id?: T;
+                  };
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
+              id?: T;
+            };
+      };
+  infrastructure?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        featuredCard?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              icon?: T;
+              image?: T;
+            };
+        cards?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              icon?: T;
+              tone?: T;
+              id?: T;
+            };
+      };
+  ecosystem?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        partnerLogos?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        mentors?:
+          | T
+          | {
+              name?: T;
+              role?: T;
+              bio?: T;
+              image?: T;
+              id?: T;
+            };
+        successHighlight?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              metric?: T;
+              subtext?: T;
+            };
+      };
+  finalCTA?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        primaryCTA?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        secondaryCTA?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
