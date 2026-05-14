@@ -10,18 +10,21 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
+    "lint:staged": "lint-staged",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "prepare": "simple-git-hooks",
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed.ts",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start -p 3002",
     "test": "pnpm run test:int && pnpm run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
-    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
+    "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
+    "typescript": "tsc --noEmit"
   },
   "dependencies": {
     "@payloadcms/db-vercel-postgres": "3.84.1",
     "@payloadcms/next": "3.84.1",
     "@payloadcms/richtext-lexical": "3.84.1",
-    "@payloadcms/storage-s3": "^3.84.1",
+    "@payloadcms/storage-s3": "3.84.1",
     "@payloadcms/ui": "3.84.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
@@ -42,7 +45,9 @@
     "eslint": "^9.16.0",
     "eslint-config-next": "16.2.6",
     "jsdom": "28.0.0",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.4.2",
+    "simple-git-hooks": "^2.13.1",
     "tsx": "4.21.0",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "6.0.5",
@@ -57,6 +62,14 @@
       "sharp",
       "esbuild",
       "unrs-resolver"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run lint:staged && npm run typescript"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "eslint --fix"
     ]
   }
 }

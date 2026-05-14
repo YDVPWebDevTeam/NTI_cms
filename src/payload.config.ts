@@ -20,10 +20,16 @@ const parseOrigins = (...values: Array<string | undefined>): string[] =>
     .filter(Boolean)
 
 const isProduction = process.env.NODE_ENV === 'production'
+const developmentCorsOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://localhost:3002',
+  'http://127.0.0.1:3002',
+]
 
 const frontendCors = [
   ...parseOrigins(process.env.FRONTEND_URL, process.env.CORS_ORIGINS),
-  ...(!isProduction ? ['http://localhost:3000', 'http://127.0.0.1:3000'] : []),
+  ...(!isProduction ? developmentCorsOrigins : []),
 ].filter((value, index, array) => array.indexOf(value) === index)
 
 const r2PublicBaseUrl = process.env.R2_PUBLIC_BASE_URL?.replace(/\/+$/, '')
@@ -72,7 +78,6 @@ export default buildConfig({
   sharp,
   plugins: [
     s3Storage({
-      acl: 'public-read',
       bucket: process.env.R2_BUCKET_NAME || 'unused',
       collections: {
         media: {

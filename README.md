@@ -67,7 +67,7 @@ See the [Collections](https://payloadcms.com/docs/configuration/collections) doc
 Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
 
 1. Follow the environment setup above and make sure `POSTGRES_URL` points at the `postgres` service
-1. Next run `docker-compose up`
+1. Next run `docker compose up`
 1. Open `http://localhost:3002`
 1. Run `docker compose exec payload pnpm seed` if you need starter landing-page content
 
