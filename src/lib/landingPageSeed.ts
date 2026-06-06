@@ -1,68 +1,30 @@
+import type { LandingPage } from '../payload-types'
+
 type Locale = 'en' | 'sk'
 
-type SeedLink = {
-  href: string
-  label: string
-}
-
-type SeedLandingPageContent = {
-  ecosystem: {
-    description: string
-    heading: string
-    mentors: Array<{
-      bio: string
-      name: string
-      role: string
-    }>
+/**
+ * Seed content mirrors the {@link LandingPage} global, minus the fields Payload
+ * manages (id/timestamps) and optional media uploads. Repeating `{ label }`
+ * arrays are authored here as plain `string[]` and expanded in
+ * {@link buildLandingPageSeedData}.
+ */
+type SeedLandingPageContent = Omit<
+  LandingPage,
+  'createdAt' | 'ecosystem' | 'hero' | 'id' | 'infrastructure' | 'programs' | 'updatedAt'
+> & {
+  ecosystem: Omit<LandingPage['ecosystem'], 'mentors' | 'partnerLogos'> & {
+    mentors: Array<Omit<LandingPage['ecosystem']['mentors'][number], 'id' | 'image'>>
     partnerLogos: string[]
-    successHighlight: {
-      eyebrow: string
-      metric: string
-      subtext: string
-      title: string
-    }
   }
-  finalCTA: {
-    description: string
-    primaryCTA: SeedLink
-    secondaryCTA: SeedLink
-    title: string
+  hero: Omit<LandingPage['hero'], 'heroImage'>
+  infrastructure: Omit<LandingPage['infrastructure'], 'cards' | 'featuredCard'> & {
+    cards: Array<Omit<LandingPage['infrastructure']['cards'][number], 'id'>>
+    featuredCard: Omit<LandingPage['infrastructure']['featuredCard'], 'image'>
   }
-  hero: {
-    description: string
-    eyebrow: string
-    learnMoreCTA: SeedLink
-    primaryCTA: SeedLink
-    secondaryCTA: SeedLink
-    titleHighlight: string
-    titlePrefix: string
-    titleSuffix: string
-  }
-  infrastructure: {
-    cards: Array<{
-      description: string
-      icon: 'users' | 'mentor' | 'building'
-      title: string
-      tone: 'surface' | 'primary' | 'tertiary'
-    }>
-    eyebrow: string
-    featuredCard: {
-      description: string
-      icon: 'flask'
-      title: string
-    }
-    heading: string
-  }
-  programs: {
-    heading: string
-    items: Array<{
-      accent: 'primary' | 'tertiary'
-      bulletItems: string[]
-      cta: SeedLink
-      description: string
-      icon: 'rocket' | 'building'
-      title: string
-    }>
+  programs: Omit<LandingPage['programs'], 'items'> & {
+    items: Array<
+      Omit<LandingPage['programs']['items'][number], 'bulletItems' | 'id'> & { bulletItems: string[] }
+    >
   }
 }
 
@@ -324,89 +286,28 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
 
 export const landingPageSeedLocales = ['en', 'sk'] as const
 
+const toLabels = (values: string[]) => values.map((label) => ({ label }))
+
+/**
+ * Expands the plain `string[]` lists in seed content into the `{ label }[]`
+ * shape Payload arrays expect. Every other field is already in its final shape,
+ * so it is passed through untouched.
+ */
 export function buildLandingPageSeedData(locale: Locale) {
   const content = landingPageSeedContent[locale]
 
   return {
-    hero: {
-      description: content.hero.description,
-      eyebrow: content.hero.eyebrow,
-      learnMoreCTA: {
-        href: content.hero.learnMoreCTA.href,
-        label: content.hero.learnMoreCTA.label,
-      },
-      primaryCTA: {
-        href: content.hero.primaryCTA.href,
-        label: content.hero.primaryCTA.label,
-      },
-      secondaryCTA: {
-        href: content.hero.secondaryCTA.href,
-        label: content.hero.secondaryCTA.label,
-      },
-      titleHighlight: content.hero.titleHighlight,
-      titlePrefix: content.hero.titlePrefix,
-      titleSuffix: content.hero.titleSuffix,
+    ...content,
+    ecosystem: {
+      ...content.ecosystem,
+      partnerLogos: toLabels(content.ecosystem.partnerLogos),
     },
     programs: {
-      heading: content.programs.heading,
+      ...content.programs,
       items: content.programs.items.map((item) => ({
-        accent: item.accent,
-        bulletItems: item.bulletItems.map((label) => ({
-          label,
-        })),
-        cta: {
-          href: item.cta.href,
-          label: item.cta.label,
-        },
-        description: item.description,
-        icon: item.icon,
-        title: item.title,
+        ...item,
+        bulletItems: toLabels(item.bulletItems),
       })),
-    },
-    infrastructure: {
-      cards: content.infrastructure.cards.map((card) => ({
-        description: card.description,
-        icon: card.icon,
-        title: card.title,
-        tone: card.tone,
-      })),
-      eyebrow: content.infrastructure.eyebrow,
-      featuredCard: {
-        description: content.infrastructure.featuredCard.description,
-        icon: content.infrastructure.featuredCard.icon,
-        title: content.infrastructure.featuredCard.title,
-      },
-      heading: content.infrastructure.heading,
-    },
-    ecosystem: {
-      description: content.ecosystem.description,
-      heading: content.ecosystem.heading,
-      mentors: content.ecosystem.mentors.map((mentor) => ({
-        bio: mentor.bio,
-        name: mentor.name,
-        role: mentor.role,
-      })),
-      partnerLogos: content.ecosystem.partnerLogos.map((label) => ({
-        label,
-      })),
-      successHighlight: {
-        eyebrow: content.ecosystem.successHighlight.eyebrow,
-        metric: content.ecosystem.successHighlight.metric,
-        subtext: content.ecosystem.successHighlight.subtext,
-        title: content.ecosystem.successHighlight.title,
-      },
-    },
-    finalCTA: {
-      description: content.finalCTA.description,
-      primaryCTA: {
-        href: content.finalCTA.primaryCTA.href,
-        label: content.finalCTA.primaryCTA.label,
-      },
-      secondaryCTA: {
-        href: content.finalCTA.secondaryCTA.href,
-        label: content.finalCTA.secondaryCTA.label,
-      },
-      title: content.finalCTA.title,
     },
   }
 }
