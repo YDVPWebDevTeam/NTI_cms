@@ -34,18 +34,6 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
       description:
         'Nitriansky technologicky inkubator bridges the gap between academic research and market reality. We turn bold ideas into high-performance startups.',
       eyebrow: 'Innovation Hub',
-      learnMoreCTA: {
-        href: '#programs',
-        label: 'Learn more about NTI',
-      },
-      primaryCTA: {
-        href: '/register/student',
-        label: 'Apply as student/team',
-      },
-      secondaryCTA: {
-        href: '/register/company-owner',
-        label: 'Submit a challenge',
-      },
       titleHighlight: 'Precision',
       titlePrefix: 'Fueling the',
       titleSuffix: 'of Future Tech.',
@@ -60,10 +48,6 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
             '1-on-1 Mentoring',
             'Specialized Lab Infrastructure',
           ],
-          cta: {
-            href: '/register/student',
-            label: 'Launch Startup',
-          },
           description:
             'For visionaries with their own product ideas. Transform your prototype into a market-ready company with full incubation support.',
           icon: 'rocket',
@@ -76,10 +60,6 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
             'Collaboration with Enterprises',
             'Career Placement Opportunities',
           ],
-          cta: {
-            href: '/register/company-owner',
-            label: 'Explore Challenges',
-          },
           description:
             'Solve real-world challenges defined by our corporate partners. Gain professional experience while building breakthrough solutions.',
           icon: 'building',
@@ -144,14 +124,6 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
     finalCTA: {
       description:
         'Join a community of innovators, engineers, and entrepreneurs. Our next cohort starts in September.',
-      primaryCTA: {
-        href: '/register/student',
-        label: 'Apply as Student',
-      },
-      secondaryCTA: {
-        href: '/register/company-owner',
-        label: 'Submit Challenge',
-      },
       title: 'Ready to build the future of Nitra?',
     },
   },
@@ -160,18 +132,6 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
       description:
         'Nitriansky technologicky inkubator prepaja akademicky vyskum s realitou trhu. Pomahame menit odvazne napady na vykonne startupy.',
       eyebrow: 'Inovacne centrum',
-      learnMoreCTA: {
-        href: '#programs',
-        label: 'Zistit viac o NTI',
-      },
-      primaryCTA: {
-        href: '/register/student',
-        label: 'Prihlasit sa ako student/tim',
-      },
-      secondaryCTA: {
-        href: '/register/company-owner',
-        label: 'Pridat vyzvu',
-      },
       titleHighlight: 'presnost',
       titlePrefix: 'Pohaname',
       titleSuffix: 'buduce technologie.',
@@ -186,10 +146,6 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
             'Individualne mentorstvo',
             'Specializovane laboratorne zazemie',
           ],
-          cta: {
-            href: '/register/student',
-            label: 'Spustit startup',
-          },
           description:
             'Pre vizionarov s vlastnym produktovym napadom. Premenime prototyp na firmu pripravenu na trh s plnou inkubacnou podporou.',
           icon: 'rocket',
@@ -202,10 +158,6 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
             'Spolupraca s podnikmi',
             'Prilezitosti na karierny rast',
           ],
-          cta: {
-            href: '/register/company-owner',
-            label: 'Preskumat vyzvy',
-          },
           description:
             'Riesite skutocne vyzvy od firemnych partnerov. Ziskate prax a vytvorite riesenia s realnym dopadom.',
           icon: 'building',
@@ -271,14 +223,6 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
     finalCTA: {
       description:
         'Pridajte sa ku komunite inovatorov, inzinierov a podnikatelov. Dalsia kohorta startuje v septembri.',
-      primaryCTA: {
-        href: '/register/student',
-        label: 'Prihlasit sa ako student',
-      },
-      secondaryCTA: {
-        href: '/register/company-owner',
-        label: 'Pridat vyzvu',
-      },
       title: 'Ste pripraveni budovat buducnost Nitry?',
     },
   },

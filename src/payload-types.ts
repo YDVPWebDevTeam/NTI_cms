@@ -91,9 +91,15 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('en' | 'sk') | ('en' | 'sk')[];
   globals: {
     'landing-page': LandingPage;
+    partners: Partner;
+    about: About;
+    mentors: Mentor;
   };
   globalsSelect: {
     'landing-page': LandingPageSelect<false> | LandingPageSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
+    mentors: MentorsSelect<false> | MentorsSelect<true>;
   };
   locale: 'en' | 'sk';
   widgets: {
@@ -445,18 +451,6 @@ export interface LandingPage {
     titleHighlight: string;
     titleSuffix: string;
     description: string;
-    primaryCTA: {
-      label: string;
-      href: string;
-    };
-    secondaryCTA: {
-      label: string;
-      href: string;
-    };
-    learnMoreCTA: {
-      label: string;
-      href: string;
-    };
     /**
      * Optional in CMS. The frontend will use its built-in fallback image until you upload one.
      */
@@ -473,10 +467,6 @@ export interface LandingPage {
         label: string;
         id?: string | null;
       }[];
-      cta: {
-        label: string;
-        href: string;
-      };
       id?: string | null;
     }[];
   };
@@ -527,14 +517,216 @@ export interface LandingPage {
   finalCTA: {
     title: string;
     description: string;
-    primaryCTA: {
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: number;
+  hero: {
+    eyebrow: string;
+    title: string;
+    description: string;
+  };
+  why: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    features: {
+      icon:
+        | 'badge'
+        | 'briefcase'
+        | 'building'
+        | 'flask'
+        | 'globe'
+        | 'graduation'
+        | 'handshake'
+        | 'lightbulb'
+        | 'mentor'
+        | 'network'
+        | 'rocket'
+        | 'sparkles'
+        | 'target'
+        | 'trending'
+        | 'trophy'
+        | 'users';
+      title: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  ways: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    features: {
+      icon:
+        | 'badge'
+        | 'briefcase'
+        | 'building'
+        | 'flask'
+        | 'globe'
+        | 'graduation'
+        | 'handshake'
+        | 'lightbulb'
+        | 'mentor'
+        | 'network'
+        | 'rocket'
+        | 'sparkles'
+        | 'target'
+        | 'trending'
+        | 'trophy'
+        | 'users';
+      title: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  logos: {
+    label: string;
+    items: {
       label: string;
-      href: string;
-    };
-    secondaryCTA: {
-      label: string;
-      href: string;
-    };
+      id?: string | null;
+    }[];
+  };
+  cta: {
+    title: string;
+    description: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  hero: {
+    eyebrow: string;
+    title: string;
+    description: string;
+  };
+  what: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    features: {
+      icon:
+        | 'badge'
+        | 'briefcase'
+        | 'building'
+        | 'flask'
+        | 'globe'
+        | 'graduation'
+        | 'handshake'
+        | 'lightbulb'
+        | 'mentor'
+        | 'network'
+        | 'rocket'
+        | 'sparkles'
+        | 'target'
+        | 'trending'
+        | 'trophy'
+        | 'users';
+      title: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  values: {
+    eyebrow: string;
+    title: string;
+    features: {
+      icon:
+        | 'badge'
+        | 'briefcase'
+        | 'building'
+        | 'flask'
+        | 'globe'
+        | 'graduation'
+        | 'handshake'
+        | 'lightbulb'
+        | 'mentor'
+        | 'network'
+        | 'rocket'
+        | 'sparkles'
+        | 'target'
+        | 'trending'
+        | 'trophy'
+        | 'users';
+      title: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  cta: {
+    title: string;
+    description: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mentors".
+ */
+export interface Mentor {
+  id: number;
+  hero: {
+    eyebrow: string;
+    title: string;
+    description: string;
+  };
+  value: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    features: {
+      icon:
+        | 'badge'
+        | 'briefcase'
+        | 'building'
+        | 'flask'
+        | 'globe'
+        | 'graduation'
+        | 'handshake'
+        | 'lightbulb'
+        | 'mentor'
+        | 'network'
+        | 'rocket'
+        | 'sparkles'
+        | 'target'
+        | 'trending'
+        | 'trophy'
+        | 'users';
+      title: string;
+      description: string;
+      id?: string | null;
+    }[];
+  };
+  people: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    mentors: {
+      name: string;
+      role: string;
+      bio: string;
+      /**
+       * Optional in CMS. The frontend will use a built-in default portrait until you upload one.
+       */
+      image?: (number | null) | Media;
+      id?: string | null;
+    }[];
+  };
+  cta: {
+    title: string;
+    description: string;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -552,24 +744,6 @@ export interface LandingPageSelect<T extends boolean = true> {
         titleHighlight?: T;
         titleSuffix?: T;
         description?: T;
-        primaryCTA?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-            };
-        secondaryCTA?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-            };
-        learnMoreCTA?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-            };
         heroImage?: T;
       };
   programs?:
@@ -588,12 +762,6 @@ export interface LandingPageSelect<T extends boolean = true> {
                 | {
                     label?: T;
                     id?: T;
-                  };
-              cta?:
-                | T
-                | {
-                    label?: T;
-                    href?: T;
                   };
               id?: T;
             };
@@ -655,18 +823,173 @@ export interface LandingPageSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
-        primaryCTA?:
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+      };
+  why?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  ways?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  logos?:
+    | T
+    | {
+        label?: T;
+        items?:
           | T
           | {
               label?: T;
-              href?: T;
+              id?: T;
             };
-        secondaryCTA?:
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+      };
+  what?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        features?:
           | T
           | {
-              label?: T;
-              href?: T;
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
             };
+      };
+  values?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        features?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mentors_select".
+ */
+export interface MentorsSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+      };
+  value?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  people?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        mentors?:
+          | T
+          | {
+              name?: T;
+              role?: T;
+              bio?: T;
+              image?: T;
+              id?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -9,7 +9,10 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { News } from './collections/News'
+import { About } from './globals/About'
 import { LandingPage } from './globals/LandingPage'
+import { Mentors } from './globals/Mentors'
+import { Partners } from './globals/Partners'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,7 +53,7 @@ export default buildConfig({
   },
   cors: frontendCors.length > 0 ? frontendCors : undefined,
   collections: [Users, Media, News],
-  globals: [LandingPage],
+  globals: [LandingPage, Partners, About, Mentors],
   editor: lexicalEditor(),
   localization: {
     defaultLocale: 'en',

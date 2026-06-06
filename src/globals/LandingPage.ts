@@ -43,13 +43,6 @@ const select = (name: string, defaultValue: string, options: SelectField['option
   required: true,
 })
 
-/** A label + href pair used by every call-to-action. */
-const cta = (name: string): Field => ({
-  name,
-  type: 'group',
-  fields: [text('label'), { name: 'href', type: 'text', required: true }],
-})
-
 /** A required array of localized labels, e.g. bullet points or partner names. */
 const labelList = (name: string, minRows: number, maxRows: number): Field => ({
   name,
@@ -79,9 +72,6 @@ export const LandingPage: GlobalConfig = {
         text('titleHighlight'),
         text('titleSuffix'),
         textarea('description'),
-        cta('primaryCTA'),
-        cta('secondaryCTA'),
-        cta('learnMoreCTA'),
         mediaUpload('heroImage'),
       ],
     },
@@ -105,7 +95,6 @@ export const LandingPage: GlobalConfig = {
               { label: 'Tertiary', value: 'tertiary' },
             ]),
             labelList('bulletItems', 3, 4),
-            cta('cta'),
           ],
         },
       ],
@@ -165,7 +154,7 @@ export const LandingPage: GlobalConfig = {
     {
       name: 'finalCTA',
       type: 'group',
-      fields: [text('title'), textarea('description'), cta('primaryCTA'), cta('secondaryCTA')],
+      fields: [text('title'), textarea('description')],
     },
   ],
 }
