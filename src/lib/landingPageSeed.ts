@@ -32,7 +32,7 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
   en: {
     hero: {
       description:
-        'Nitriansky technologicky inkubator bridges the gap between academic research and market reality. We turn bold ideas into high-performance startups.',
+        'The Nitra Technology Incubator (NTI) bridges the gap between academic research and market reality. We turn bold ideas into high-performance startups.',
       eyebrow: 'Innovation Hub',
       titleHighlight: 'Precision',
       titlePrefix: 'Fueling the',
@@ -104,12 +104,12 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
       mentors: [
         {
           bio: 'Expert in neural networks with 15+ years in international R&D.',
-          name: 'Ing. Marek Novak',
+          name: 'Ing. Marek Novák',
           role: 'Lead Mentor / AI Systems',
         },
         {
           bio: 'Specializes in market entry strategies for DeepTech startups.',
-          name: 'Dr. Lucia Bielik',
+          name: 'Dr. Lucia Bieliková',
           role: 'Business Strategy',
         },
       ],
@@ -130,36 +130,36 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
   sk: {
     hero: {
       description:
-        'Nitriansky technologicky inkubator prepaja akademicky vyskum s realitou trhu. Pomahame menit odvazne napady na vykonne startupy.',
-      eyebrow: 'Inovacne centrum',
-      titleHighlight: 'presnost',
-      titlePrefix: 'Pohaname',
-      titleSuffix: 'buduce technologie.',
+        'Nitriansky technologický inkubátor prepája akademický výskum s realitou trhu. Pomáhame meniť odvážne nápady na výkonné startupy.',
+      eyebrow: 'Inovačné centrum',
+      titleHighlight: 'presnosť',
+      titlePrefix: 'Poháňame',
+      titleSuffix: 'budúce technológie.',
     },
     programs: {
-      heading: 'Vyberte si svoju cestu k inovaciam',
+      heading: 'Vyberte si svoju cestu k inováciám',
       items: [
         {
           accent: 'primary',
           bulletItems: [
-            'Pristup k seed financovaniu',
-            'Individualne mentorstvo',
-            'Specializovane laboratorne zazemie',
+            'Prístup k seed financovaniu',
+            'Individuálne mentorstvo',
+            'Špecializované laboratórne zázemie',
           ],
           description:
-            'Pre vizionarov s vlastnym produktovym napadom. Premenime prototyp na firmu pripravenu na trh s plnou inkubacnou podporou.',
+            'Pre vizionárov s vlastným produktovým nápadom. Premeníme prototyp na firmu pripravenú na trh s plnou inkubačnou podporou.',
           icon: 'rocket',
           title: 'Program A: Rozbeh startupu',
         },
         {
           accent: 'tertiary',
           bulletItems: [
-            'Realna firemna prax',
-            'Spolupraca s podnikmi',
-            'Prilezitosti na karierny rast',
+            'Reálna firemná prax',
+            'Spolupráca s podnikmi',
+            'Príležitosti na kariérny rast',
           ],
           description:
-            'Riesite skutocne vyzvy od firemnych partnerov. Ziskate prax a vytvorite riesenia s realnym dopadom.',
+            'Riešite skutočné výzvy od firemných partnerov. Získate prax a vytvoríte riešenia s reálnym dopadom.',
           icon: 'building',
           title: 'Program B: Prepojenie s priemyslom',
         },
@@ -169,61 +169,61 @@ export const landingPageSeedContent: Record<Locale, SeedLandingPageContent> = {
       cards: [
         {
           description:
-            'Prepajame vas s univerzitnym vyskumom a silnymi europskymi technologickymi centrami.',
+            'Prepájame vás s univerzitným výskumom a silnými európskymi technologickými centrami.',
           icon: 'users',
-          title: 'Globalne partnerstva',
+          title: 'Globálne partnerstvá',
           tone: 'surface',
         },
         {
-          description: 'Pod vedenim ludi zo Silicon Valley aj z Bratislavy.',
+          description: 'Pod vedením ľudí zo Silicon Valley aj z Bratislavy.',
           icon: 'mentor',
           title: 'Mentoring',
           tone: 'primary',
         },
         {
-          description: 'Pomahame udrzat talent v Nitre cez skutocne prilezitosti.',
+          description: 'Pomáhame udržať talent v Nitre cez skutočné príležitosti.',
           icon: 'building',
-          title: 'Udrzanie talentu',
+          title: 'Udržanie talentu',
           tone: 'tertiary',
         },
       ],
-      eyebrow: 'Preco NTI',
+      eyebrow: 'Prečo NTI',
       featuredCard: {
         description:
-          'Pristup k modernym priestorom, 3D tlaci, laboratoriam aj pravnej podpore pri raste projektu.',
+          'Prístup k moderným priestorom, 3D tlači, laboratóriám aj právnej podpore pri raste projektu.',
         icon: 'flask',
-        title: 'Plnohodnotna inkubacia',
+        title: 'Plnohodnotná inkubácia',
       },
-      heading: 'Architektura presneho inovacneho zazemia',
+      heading: 'Architektúra presného inovačného zázemia',
     },
     ecosystem: {
       description:
-        'Spolupracujeme s inovativnymi firmami a skusenymi mentormi v regione, aby sa vase projekty posuvali rychlejsie.',
-      heading: 'Nas ekosystem',
+        'Spolupracujeme s inovatívnymi firmami a skúsenými mentormi v regióne, aby sa vaše projekty posúvali rýchlejšie.',
+      heading: 'Náš ekosystém',
       mentors: [
         {
-          bio: 'Expert na neuronove siete s viac ako 15 rokmi medzinarodneho vyskumneho a vyvojoveho zazemia.',
-          name: 'Ing. Marek Novak',
-          role: 'Hlavny mentor / AI systemy',
+          bio: 'Expert na neurónové siete s viac ako 15 rokmi medzinárodného výskumného a vývojového zázemia.',
+          name: 'Ing. Marek Novák',
+          role: 'Hlavný mentor / AI systémy',
         },
         {
-          bio: 'Specialistka na vstup na trh a rast DeepTech startupov.',
-          name: 'Dr. Lucia Bielik',
-          role: 'Biznis strategia',
+          bio: 'Špecialistka na vstup na trh a rast DeepTech startupov.',
+          name: 'Dr. Lucia Bieliková',
+          role: 'Biznis stratégia',
         },
       ],
       partnerLogos: ['TECHCORP', 'UNIDATA', 'NITRA_LAB'],
       successHighlight: {
-        eyebrow: 'Nedavny uspech',
-        metric: 'Ziskane financovanie 500 tisic EUR',
+        eyebrow: 'Nedávny úspech',
+        metric: 'Získané financovanie 500 tisíc EUR',
         subtext: 'Absolvent kohorty 2023',
         title: 'AquaSense Solutions',
       },
     },
     finalCTA: {
       description:
-        'Pridajte sa ku komunite inovatorov, inzinierov a podnikatelov. Dalsia kohorta startuje v septembri.',
-      title: 'Ste pripraveni budovat buducnost Nitry?',
+        'Pridajte sa ku komunite inovátorov, inžinierov a podnikateľov. Ďalšia kohorta štartuje v septembri.',
+      title: 'Ste pripravení budovať budúcnosť Nitry?',
     },
   },
 }
