@@ -1,45 +1,57 @@
-import type { GlobalConfig } from 'payload'
+import type { Field, GlobalConfig, SelectField } from 'payload'
+
+const OPTIONAL_MEDIA_DESCRIPTION =
+  'Optional in CMS. The frontend will use its built-in fallback image until you upload one.'
 
 const iconOptions = [
-  {
-    label: 'Rocket',
-    value: 'rocket',
-  },
-  {
-    label: 'Building',
-    value: 'building',
-  },
-  {
-    label: 'Flask',
-    value: 'flask',
-  },
-  {
-    label: 'Users',
-    value: 'users',
-  },
-  {
-    label: 'Mentor',
-    value: 'mentor',
-  },
-  {
-    label: 'Badge',
-    value: 'badge',
-  },
+  { label: 'Rocket', value: 'rocket' },
+  { label: 'Building', value: 'building' },
+  { label: 'Flask', value: 'flask' },
+  { label: 'Users', value: 'users' },
+  { label: 'Mentor', value: 'mentor' },
+  { label: 'Badge', value: 'badge' },
 ]
 
-const linkFields = [
-  {
-    name: 'label',
-    type: 'text',
-    localized: true,
-    required: true,
-  },
-  {
-    name: 'href',
-    type: 'text',
-    required: true,
-  },
-] satisfies GlobalConfig['fields']
+/** A required, localized single-line text field. */
+const text = (name: string): Field => ({ name, type: 'text', localized: true, required: true })
+
+/** A required, localized multi-line text field. */
+const textarea = (name: string): Field => ({
+  name,
+  type: 'textarea',
+  localized: true,
+  required: true,
+})
+
+/** A required icon picker shared across programs, infrastructure cards, etc. */
+const icon = (): Field => ({ name: 'icon', type: 'select', options: iconOptions, required: true })
+
+/** An optional media upload that the frontend falls back to a default image for. */
+const mediaUpload = (name: string): Field => ({
+  name,
+  type: 'upload',
+  relationTo: 'media',
+  admin: { description: OPTIONAL_MEDIA_DESCRIPTION },
+})
+
+/** A required select with a default, e.g. accent or tone variants. */
+const select = (name: string, defaultValue: string, options: SelectField['options']): Field => ({
+  name,
+  type: 'select',
+  defaultValue,
+  options,
+  required: true,
+})
+
+/** A required array of localized labels, e.g. bullet points or partner names. */
+const labelList = (name: string, minRows: number, maxRows: number): Field => ({
+  name,
+  type: 'array',
+  minRows,
+  maxRows,
+  required: true,
+  fields: [text('label')],
+})
 
 export const LandingPage: GlobalConfig = {
   slug: 'landing-page',
@@ -55,72 +67,19 @@ export const LandingPage: GlobalConfig = {
       name: 'hero',
       type: 'group',
       fields: [
-        {
-          name: 'eyebrow',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'titlePrefix',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'titleHighlight',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'titleSuffix',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'description',
-          type: 'textarea',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'primaryCTA',
-          type: 'group',
-          fields: linkFields,
-        },
-        {
-          name: 'secondaryCTA',
-          type: 'group',
-          fields: linkFields,
-        },
-        {
-          name: 'learnMoreCTA',
-          type: 'group',
-          fields: linkFields,
-        },
-        {
-          name: 'heroImage',
-          type: 'upload',
-          relationTo: 'media',
-          admin: {
-            description:
-              'Optional in CMS. The frontend will use its built-in fallback image until you upload one.',
-          },
-        },
+        text('eyebrow'),
+        text('titlePrefix'),
+        text('titleHighlight'),
+        text('titleSuffix'),
+        textarea('description'),
+        mediaUpload('heroImage'),
       ],
     },
     {
       name: 'programs',
       type: 'group',
       fields: [
-        {
-          name: 'heading',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
+        text('heading'),
         {
           name: 'items',
           type: 'array',
@@ -128,60 +87,14 @@ export const LandingPage: GlobalConfig = {
           maxRows: 2,
           required: true,
           fields: [
-            {
-              name: 'title',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'description',
-              type: 'textarea',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'icon',
-              type: 'select',
-              options: iconOptions,
-              required: true,
-            },
-            {
-              name: 'accent',
-              type: 'select',
-              defaultValue: 'primary',
-              options: [
-                {
-                  label: 'Primary',
-                  value: 'primary',
-                },
-                {
-                  label: 'Tertiary',
-                  value: 'tertiary',
-                },
-              ],
-              required: true,
-            },
-            {
-              name: 'bulletItems',
-              type: 'array',
-              minRows: 3,
-              maxRows: 4,
-              required: true,
-              fields: [
-                {
-                  name: 'label',
-                  type: 'text',
-                  localized: true,
-                  required: true,
-                },
-              ],
-            },
-            {
-              name: 'cta',
-              type: 'group',
-              fields: linkFields,
-            },
+            text('title'),
+            textarea('description'),
+            icon(),
+            select('accent', 'primary', [
+              { label: 'Primary', value: 'primary' },
+              { label: 'Tertiary', value: 'tertiary' },
+            ]),
+            labelList('bulletItems', 3, 4),
           ],
         },
       ],
@@ -190,50 +103,12 @@ export const LandingPage: GlobalConfig = {
       name: 'infrastructure',
       type: 'group',
       fields: [
-        {
-          name: 'eyebrow',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'heading',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
+        text('eyebrow'),
+        text('heading'),
         {
           name: 'featuredCard',
           type: 'group',
-          fields: [
-            {
-              name: 'title',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'description',
-              type: 'textarea',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'icon',
-              type: 'select',
-              options: iconOptions,
-              required: true,
-            },
-            {
-              name: 'image',
-              type: 'upload',
-              relationTo: 'media',
-              admin: {
-                description:
-                  'Optional in CMS. The frontend will use its built-in fallback image until you upload one.',
-              },
-            },
-          ],
+          fields: [text('title'), textarea('description'), icon(), mediaUpload('image')],
         },
         {
           name: 'cards',
@@ -242,44 +117,14 @@ export const LandingPage: GlobalConfig = {
           maxRows: 3,
           required: true,
           fields: [
-            {
-              name: 'title',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'description',
-              type: 'textarea',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'icon',
-              type: 'select',
-              options: iconOptions,
-              required: true,
-            },
-            {
-              name: 'tone',
-              type: 'select',
-              defaultValue: 'surface',
-              options: [
-                {
-                  label: 'Surface',
-                  value: 'surface',
-                },
-                {
-                  label: 'Primary',
-                  value: 'primary',
-                },
-                {
-                  label: 'Tertiary',
-                  value: 'tertiary',
-                },
-              ],
-              required: true,
-            },
+            text('title'),
+            textarea('description'),
+            icon(),
+            select('tone', 'surface', [
+              { label: 'Surface', value: 'surface' },
+              { label: 'Primary', value: 'primary' },
+              { label: 'Tertiary', value: 'tertiary' },
+            ]),
           ],
         },
       ],
@@ -288,128 +133,28 @@ export const LandingPage: GlobalConfig = {
       name: 'ecosystem',
       type: 'group',
       fields: [
-        {
-          name: 'heading',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'description',
-          type: 'textarea',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'partnerLogos',
-          type: 'array',
-          minRows: 3,
-          maxRows: 6,
-          required: true,
-          fields: [
-            {
-              name: 'label',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-          ],
-        },
+        text('heading'),
+        textarea('description'),
+        labelList('partnerLogos', 3, 6),
         {
           name: 'mentors',
           type: 'array',
           minRows: 2,
           maxRows: 4,
           required: true,
-          fields: [
-            {
-              name: 'name',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'role',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'bio',
-              type: 'textarea',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'image',
-              type: 'upload',
-              relationTo: 'media',
-              admin: {
-                description:
-                  'Optional in CMS. The frontend will use its built-in fallback image until you upload one.',
-              },
-            },
-          ],
+          fields: [text('name'), text('role'), textarea('bio'), mediaUpload('image')],
         },
         {
           name: 'successHighlight',
           type: 'group',
-          fields: [
-            {
-              name: 'eyebrow',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'title',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'metric',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-            {
-              name: 'subtext',
-              type: 'text',
-              localized: true,
-              required: true,
-            },
-          ],
+          fields: [text('eyebrow'), text('title'), text('metric'), text('subtext')],
         },
       ],
     },
     {
       name: 'finalCTA',
       type: 'group',
-      fields: [
-        {
-          name: 'title',
-          type: 'text',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'description',
-          type: 'textarea',
-          localized: true,
-          required: true,
-        },
-        {
-          name: 'primaryCTA',
-          type: 'group',
-          fields: linkFields,
-        },
-        {
-          name: 'secondaryCTA',
-          type: 'group',
-          fields: linkFields,
-        },
-      ],
+      fields: [text('title'), textarea('description')],
     },
   ],
 }

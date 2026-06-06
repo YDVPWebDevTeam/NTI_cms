@@ -8,7 +8,11 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { News } from './collections/News'
+import { About } from './globals/About'
 import { LandingPage } from './globals/LandingPage'
+import { Mentors } from './globals/Mentors'
+import { Partners } from './globals/Partners'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,10 +39,10 @@ const frontendCors = [
 const r2PublicBaseUrl = process.env.R2_PUBLIC_BASE_URL?.replace(/\/+$/, '')
 const r2IsConfigured = Boolean(
   process.env.R2_ENDPOINT &&
-    process.env.R2_BUCKET_NAME &&
-    process.env.R2_ACCESS_KEY_ID &&
-    process.env.R2_SECRET_ACCESS_KEY &&
-    r2PublicBaseUrl,
+  process.env.R2_BUCKET_NAME &&
+  process.env.R2_ACCESS_KEY_ID &&
+  process.env.R2_SECRET_ACCESS_KEY &&
+  r2PublicBaseUrl,
 )
 export default buildConfig({
   admin: {
@@ -48,8 +52,8 @@ export default buildConfig({
     },
   },
   cors: frontendCors.length > 0 ? frontendCors : undefined,
-  collections: [Users, Media],
-  globals: [LandingPage],
+  collections: [Users, Media, News],
+  globals: [LandingPage, Partners, About, Mentors],
   editor: lexicalEditor(),
   localization: {
     defaultLocale: 'en',
