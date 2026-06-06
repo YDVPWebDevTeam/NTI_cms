@@ -12,9 +12,17 @@ describe('API', () => {
   })
 
   it('fetches users', async () => {
-    const users = await payload.find({
-      collection: 'users',
-    })
+    const users = await payload.find({ collection: 'users' })
     expect(users).toBeDefined()
+  })
+
+  it('reads the landing-page global', async () => {
+    const landingPage = await payload.findGlobal({ slug: 'landing-page' })
+    expect(landingPage).toBeDefined()
+  })
+
+  it('lists news articles', async () => {
+    const news = await payload.find({ collection: 'news' })
+    expect(Array.isArray(news.docs)).toBe(true)
   })
 })
