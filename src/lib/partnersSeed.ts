@@ -85,7 +85,7 @@ export const partnersSeedContent: Record<Locale, SeedPartnersContent> = {
     },
     logos: {
       label: 'Trusted by partners across the ecosystem',
-      items: ['TECHCORP', 'UNIDATA', 'NITRA_LAB', 'EUTECH', 'DEEPGRID'],
+      items: ['UKF', 'FPVaI', 'Hra bez hraníc'],
     },
     cta: {
       title: 'Let’s build the regional innovation economy together',
@@ -161,7 +161,7 @@ export const partnersSeedContent: Record<Locale, SeedPartnersContent> = {
     },
     logos: {
       label: 'Dôverujú nám partneri z celého ekosystému',
-      items: ['TECHCORP', 'UNIDATA', 'NITRA_LAB', 'EUTECH', 'DEEPGRID'],
+      items: ['UKF', 'FPVaI', 'Hra bez hraníc'],
     },
     cta: {
       title: 'Budujme regionálnu inovačnú ekonomiku spoločne',
